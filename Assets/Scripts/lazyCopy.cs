@@ -6,7 +6,6 @@ public class lazyCopy : MonoBehaviour
 {
 
     public List<Transform> boneTransform = new List<Transform>();
-    public List<GameObject> children = new List<GameObject>();
     public GameObject targetsphere;
     public Transform Pole;
     public float Delta = 0.001f;
@@ -14,7 +13,7 @@ public class lazyCopy : MonoBehaviour
     int maxIterationCount = 10;
     protected Quaternion TargetInitialRotation;
     protected Quaternion EndInitialRotation;
-    Vector3 targetPosition;
+    
 
     // Start is called before the first frame update
     void Awake()
@@ -24,20 +23,23 @@ public class lazyCopy : MonoBehaviour
         Debug.Log(boneTransform.Count);
         TargetInitialRotation = targetsphere.transform.rotation;
         EndInitialRotation = transform.rotation;
+        for (int i = 0; i <= boneTransform.Count / 2; i++)
+        {
+            boneTransform.RemoveAt(boneTransform.Count - 1);
+        }
     }
+    
+        
 
-    // Update is called once per frame
-    void LateUpdate()
+        // Update is called once per frame
+        void LateUpdate()
     {
         
 
         //boneTransform[boneTransform.Count - 1].position = targetsphere.transform.position;
         for (int i = boneTransform.Count - 2; i >= 0; i--)
         {
-            RotateBone(boneTransform[boneTransform.Count - 1], boneTransform[i], targetPosition);//2 saker som roterar bones atm, denna och den där nere.poleskiten
-
-            //move towards pole
-
+            RotateBone(boneTransform[boneTransform.Count - 1], boneTransform[i], targetsphere.transform.position);
         }
 
 

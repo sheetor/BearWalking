@@ -6,15 +6,15 @@ public class IKManager : MonoBehaviour
 {
 
     public List<Transform> boneTransform = new List<Transform>();
-    public List<GameObject> children= new List<GameObject>();
+    //public List<GameObject> children= new List<GameObject>();
     public GameObject targetsphere;
-    public Transform Pole;
+
     public float Delta = 0.001f;
-    public float sqrDistError = 0.01f;
+    public int index;
     int maxIterationCount = 10;
     protected Quaternion TargetInitialRotation;
     protected Quaternion EndInitialRotation;
-    Vector3 targetPosition;
+    private Vector3 targetPosition;
 
     // Start is called before the first frame update
     void Awake()
@@ -28,46 +28,23 @@ public class IKManager : MonoBehaviour
         for (int i = 0; i <= boneTransform.Count / 2; i++)
         {
             boneTransform.RemoveAt(boneTransform.Count-1);
-        } 
-        
-        RaycastHit hit;
-        if (Physics.Raycast(boneTransform[boneTransform.Count - 1].position, (Vector3.down), out hit, Mathf.Infinity))
-        {
-            Debug.DrawRay(boneTransform[boneTransform.Count - 1].position, (Vector3.down) * hit.distance, Color.yellow);
-            Debug.Log("Did Hit");
-            Debug.Log(hit.point);
-            boneTransform[boneTransform.Count - 1].position = targetPosition = hit.point;
         }
-        else
-        {
-            Debug.DrawRay(boneTransform[boneTransform.Count - 1].position, (Vector3.down) * 1000, Color.white);
-            Debug.Log("Did not Hit");
-            //Vector3 targetPosition = Vector3.Lerp(boneTransform[boneTransform.Count - 1].position, targetsphere.transform.position, 1f);
-        }
-        
-
+        targetPosition = boneTransform[boneTransform.Count - 1].position;
     }    
 
     // Update is called once per frame
     void LateUpdate()
     {
-
-        
-        if (targetPosition!= null)
+        if(Vector3.Distance(targetPosition, targetsphere.transform.position) > 1.2)
         {
-            //boneTransform[boneTransform.Count - 1].position = targetsphere.transform.position;
-            for (int i = boneTransform.Count - 2; i >= 0; i--)
-            {
-                RotateBone(boneTransform[boneTransform.Count - 1], boneTransform[i], targetPosition);//2 saker som roterar bones atm, denna och den där nere.poleskiten
-
-                //move towards pole
-            }
+            targetPosition = targetsphere.GetComponent<fitCollider>().hit.point;
         }
 
-    }
+        for (int i = boneTransform.Count - 3; i >= 0; i--)
+        {
+            RotateBone(boneTransform[boneTransform.Count - 1], boneTransform[i], targetPosition);
+        }
 
-    void getTarget()
-    {
 
     }
 
