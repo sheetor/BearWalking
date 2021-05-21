@@ -24,13 +24,9 @@ public class bodyRays : MonoBehaviour
     void Update()
     {
 
-        hits.Clear();
-        transform.Translate(new Vector3(-1f, 0, 0) * Time.deltaTime);
-        if (Input.GetKeyDown(KeyCode.UpArrow)){
-            Debug.Log("sadai");
-            
-            //this.GetComponent<Rigidbody>().velocity = transform.forward * 10f;
-        }
+        
+        transform.Translate(new Vector3(1f, 0, 0) * Time.deltaTime);
+        
         
     }
 }

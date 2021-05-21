@@ -29,7 +29,7 @@ public class fitCollider : MonoBehaviour
             Debug.DrawRay(transform.position, (Vector3.down) * hit.distance, Color.red);
             //Debug.Log("Did Hit");
             //Debug.Log(hit.point);
-            transform.position = hit.point+ new Vector3(0,2f);
+            transform.position = hit.point+ new Vector3(0,1f);
             
         }
         else

@@ -6,7 +6,7 @@ public class IKManager : MonoBehaviour
 {
 
     public List<Transform> boneTransform = new List<Transform>();
-    //public List<GameObject> children= new List<GameObject>();
+    public List<GameObject> children= new List<GameObject>();
     public GameObject targetsphere;
 
     public float Delta = 0.001f;
@@ -16,38 +16,55 @@ public class IKManager : MonoBehaviour
     protected Quaternion EndInitialRotation;
     private Vector3 targetPosition;
 
+    public float speed = 0.7f;
+
     // Start is called before the first frame update
     void Awake()
     {
         boneTransform.Add(this.transform);
         GetChildren(transform, boneTransform);
 
-        Debug.Log(boneTransform.Count/2);
+        //Debug.Log(boneTransform.Count/2);
         TargetInitialRotation = targetsphere.transform.rotation;
         EndInitialRotation = transform.rotation;
         for (int i = 0; i <= boneTransform.Count / 2; i++)
         {
             boneTransform.RemoveAt(boneTransform.Count-1);
         }
-        targetPosition = boneTransform[boneTransform.Count - 1].position;
+        //targetPosition = boneTransform[boneTransform.Count - 1].position;
     }    
 
     // Update is called once per frame
     void LateUpdate()
     {
-        if(Vector3.Distance(targetPosition, targetsphere.transform.position) > 1.2)
-        {
-            targetPosition = targetsphere.GetComponent<fitCollider>().hit.point;
-        }
 
-        for (int i = boneTransform.Count - 3; i >= 0; i--)
+        targetPosition = targetsphere.transform.position;
+
+        for (int i = boneTransform.Count - 2; i >= 0; i--) //den här skiten som snappar de just nu, kanske kan fucka runt i rotatebone? 
         {
             RotateBone(boneTransform[boneTransform.Count - 1], boneTransform[i], targetPosition);
         }
+        /*for (int i = boneTransform.Count - 3; i >= 0; i--) //den här skiten som snappar de just nu, kanske kan fucka runt i rotatebone? 
+        {
+            RotateBone(boneTransform[boneTransform.Count - 1], boneTransform[i], targetPosition);
+        }*/
 
 
     }
 
+    IEnumerator LerpFunction(Quaternion endValue, float duration)
+    {
+        float time = 0;
+        Quaternion startValue = transform.rotation;
+
+        while (time < duration)
+        {
+            transform.rotation = Quaternion.Lerp(startValue, endValue, time / duration);
+            time += Time.deltaTime;
+            yield return null;
+        }
+        transform.rotation = endValue;
+    }
 
     private void GetChildren(Transform parent, List<Transform> list)
     {
@@ -72,7 +89,6 @@ public class IKManager : MonoBehaviour
 
         bone.rotation = newRotation;
     }
-
     
     public Vector3 ForwardKinematics(float[] angles)
     {
@@ -93,10 +109,5 @@ public class IKManager : MonoBehaviour
     {
         Vector3 point = ForwardKinematics(angles);
         return Vector3.Distance(point, target);
-    }
-
-    void raycasterthing()
-    {
-
     }
 }
