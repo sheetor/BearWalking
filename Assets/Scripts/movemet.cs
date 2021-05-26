@@ -6,57 +6,47 @@ public class movemet : MonoBehaviour
 {
 
     public GameObject aTarget;
-    private Vector3 startPos;
-    private Vector3 rayhitPos;
-    private Vector3 currPos;
-    bool really;
-    float timeElapsed;
-    float lerpDuration = 3;
+    
 
-    float startValue = 0;
-    float endValue = 10;
-    float valueToLerp;
+    
+    
+    public float dist = 2f;
+    Vector3 currPos;
+    Vector3 rayhitPos;
 
-    public Vector3 positionToMoveTo;
-    public Quaternion targetRotation;
-    public float speed = 10.0f;
-
+    private void Awake()
+    {
+        currPos = aTarget.GetComponent<fitCollider>().hit.point;
+    }
 
     // Start is called before the first frame update
     void Start()
     {
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, (Vector3.down), out hit, Mathf.Infinity))
+        {
 
-        transform.position = aTarget.GetComponent<fitCollider>().hit.point;
-        currPos = startPos = transform.position;
-        
-        positionToMoveTo = aTarget.transform.position;
-        targetRotation = aTarget.transform.rotation;
+            transform.position = hit.point;
+
+        }
+        //transform.position = aTarget.GetComponent<fitCollider>().hit.point;
+        //currPos = startPos = transform.position;
         //StartCoroutine(LerpPosition(positionToMoveTo, 5));
     }
 
     private void Update()
     {
-        float step = speed * Time.deltaTime; // calculate distance to move
+
+        
         rayhitPos = aTarget.GetComponent<fitCollider>().hit.point;
         currPos = transform.position;
-        if (Vector3.Distance(currPos, rayhitPos) > 2)
+        float totalDist = Vector3.Distance(currPos, rayhitPos);
+        if (totalDist > 1.2f)
         {
+            Vector3 midPoint = Vector3.Lerp(currPos, rayhitPos, 0.5f) + new Vector3(0,.5f,0);
+            StartCoroutine(LerpPosition(midPoint, 0.1f));
 
-            //transform.position = Vector3.MoveTowards(transform.position, rayhitPos, step);
-
-            //transform.position = Vector3.Lerp(transform.position, rayhitPos, Time.deltaTime);
-            StartCoroutine(LerpPosition(rayhitPos,0.1f));
             
-        }
-
-
-        if (Input.GetKeyDown(KeyCode.UpArrow))
-        {
-            StartCoroutine(LerpPosition(positionToMoveTo, 5));
-        }
-        if (Input.GetKeyDown(KeyCode.DownArrow))
-        {
-            StartCoroutine(LerpPosition(startPos, 5));
         }
 
     }
@@ -72,22 +62,20 @@ public class movemet : MonoBehaviour
             time += Time.deltaTime;
             yield return null;
         }
+        time = 0;
         transform.position = targetPosition;
-    }
-
-    IEnumerator LerpFunction(Quaternion endValue, float duration)
-    {
-        float time = 0;
-        Quaternion startValue = transform.rotation;
 
         while (time < duration)
         {
-            transform.rotation = Quaternion.Lerp(startValue, endValue, time / duration);
+            transform.position = Vector3.Lerp(targetPosition, rayhitPos, time / duration);
             time += Time.deltaTime;
             yield return null;
         }
-        transform.rotation = endValue;
+        transform.position = rayhitPos;
+
     }
+
+
     public static Quaternion RotateBone(Transform effector, Transform bone, Vector3 goalPosition)
     {
         Vector3 effectorPosition = effector.position;
