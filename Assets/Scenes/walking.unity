@@ -151,11 +151,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9949826}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -11.02, y: 0.93, z: -1.09}
+  m_LocalPosition: {x: -4.0900006, y: 0, z: -1}
   m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_Father: {fileID: 1882569597}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &9949828
 MonoBehaviour:
@@ -170,6 +170,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   aTarget: {fileID: 315570432}
+  oTargets:
+  - {fileID: 2017866679}
+  - {fileID: 872672566}
   dist: 2
 --- !u!135 &9949829
 SphereCollider:
@@ -723,6 +726,7 @@ MonoBehaviour:
   - {fileID: 926436479}
   - {fileID: 1909411653}
   - {fileID: 868420378}
+  distance: 0
 --- !u!54 &192938586
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -809,7 +813,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 192938584}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -11.21, y: 1.76, z: 0}
+  m_LocalPosition: {x: -11.21, y: 1.76, z: 1.35}
   m_LocalScale: {x: 1.2540104, y: 1, z: 1}
   m_Children:
   - {fileID: 48195139}
@@ -2197,6 +2201,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectors: []
+  distance: 0
 --- !u!1 &705665108
 GameObject:
   m_ObjectHideFlags: 0
@@ -3355,11 +3360,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 872672566}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -11.49, y: 0.93, z: -1.16}
+  m_LocalPosition: {x: -4.56, y: 0, z: -1.0699999}
   m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_Father: {fileID: 1882569597}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &872672568
 MonoBehaviour:
@@ -3374,6 +3379,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   aTarget: {fileID: 1379746004}
+  oTargets:
+  - {fileID: 9949826}
+  - {fileID: 1102421956}
   dist: 2
 --- !u!135 &872672569
 SphereCollider:
@@ -4035,7 +4043,7 @@ Transform:
   m_LocalScale: {x: 20, y: 20, z: 20}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1102421956
 GameObject:
@@ -4065,11 +4073,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1102421956}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -12.45, y: 0.93, z: 1.26}
+  m_LocalPosition: {x: -5.52, y: 0, z: 1.35}
   m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_Father: {fileID: 1882569597}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1102421958
 MonoBehaviour:
@@ -4084,6 +4092,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   aTarget: {fileID: 1031609254}
+  oTargets:
+  - {fileID: 2017866679}
+  - {fileID: 872672566}
   dist: 2
 --- !u!135 &1102421959
 SphereCollider:
@@ -6264,7 +6275,11 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -6.93, y: 0.93, z: -0.09}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 2017866683}
+  - {fileID: 9949827}
+  - {fileID: 872672567}
+  - {fileID: 1102421957}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -6555,11 +6570,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2017866679}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -9.82, y: 0.93, z: 1.13}
+  m_LocalPosition: {x: -2.8899999, y: 0, z: 1.22}
   m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_Father: {fileID: 1882569597}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2017866684
 MonoBehaviour:
@@ -6574,6 +6589,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   aTarget: {fileID: 1405802933}
+  oTargets:
+  - {fileID: 9949826}
+  - {fileID: 1102421956}
   dist: 2
 --- !u!1 &2054645978 stripped
 GameObject:

@@ -6,8 +6,8 @@ public class movemet : MonoBehaviour
 {
 
     public GameObject aTarget;
-    
-
+    public GameObject[] oTargets = new GameObject[2];
+    bool CR_running = false;
     
     
     public float dist = 2f;
@@ -26,7 +26,7 @@ public class movemet : MonoBehaviour
         if (Physics.Raycast(transform.position, (Vector3.down), out hit, Mathf.Infinity))
         {
 
-            transform.position = hit.point;
+            //transform.position = hit.point;
 
         }
         //transform.position = aTarget.GetComponent<fitCollider>().hit.point;
@@ -41,7 +41,7 @@ public class movemet : MonoBehaviour
         rayhitPos = aTarget.GetComponent<fitCollider>().hit.point;
         currPos = transform.position;
         float totalDist = Vector3.Distance(currPos, rayhitPos);
-        if (totalDist > 1.2f)
+        if (totalDist > 1.2f && oTargets[0].GetComponent<movemet>().CR_running == false && oTargets[1].GetComponent<movemet>().CR_running == false)
         {
             Vector3 midPoint = Vector3.Lerp(currPos, rayhitPos, 0.5f) + new Vector3(0,.5f,0);
             StartCoroutine(LerpPosition(midPoint, 0.1f));
@@ -53,6 +53,7 @@ public class movemet : MonoBehaviour
 
     IEnumerator LerpPosition(Vector3 targetPosition, float duration)
     {
+        CR_running = true;
         float time = 0;
         Vector3 startPosition = transform.position;
 
@@ -72,6 +73,7 @@ public class movemet : MonoBehaviour
             yield return null;
         }
         transform.position = rayhitPos;
+        CR_running = false;
 
     }
 

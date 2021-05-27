@@ -4,36 +4,26 @@ using UnityEngine;
 
 public class bodyRays : MonoBehaviour
 {
-    RaycastHit hit;
+    //RaycastHit hit;
     public List<GameObject> effectors = new List<GameObject>();
     private Vector3 OGoffset = Vector3.zero;
-    private Vector3 startPos;
-    private Vector3 avgPos;
+    private Vector3 startPos, avgPos, avgLeft, avgRight;
+    public float distance;
     Vector3 diagonl = new Vector3(0.5f,-1, 1.1f);
     
     // Start is called before the first frame update
     void Start()
     {
-
-        
         for (int i =0; i < effectors.Count; i++)
         {
             
-            avgPos += transform.TransformPoint(effectors[i].transform.localPosition);
+            avgPos += (effectors[i].transform.position);
         }
         avgPos /= effectors.Count;
-        //OGoffset += new Vector3(0, avgPos.y);
-        //OGoffset = Vector3.Scale((transform.position), (new Vector3(0, 1, 0)));
+        distance = Vector3.Distance(avgPos, transform.position);
         OGoffset = avgPos - transform.position;
-        Debug.Log(OGoffset.ToString("F4"));
         OGoffset = OGoffset.normalized;
-        Debug.Log(OGoffset.ToString("F4"));
-
-
-
         avgPos = Vector3.Scale(avgPos, (new Vector3(1, 0, 1)));
-
-        //transform.position = avgPos + OGoffset;
 
     }
 
@@ -44,25 +34,18 @@ public class bodyRays : MonoBehaviour
         avgPos = Vector3.zero;
         for (int i = 0; i < effectors.Count; i++)
         {
-            //Debug.Log(transform.TransformPoint(effectors[i].transform.localPosition).ToString("F4"));
-            avgPos += transform.TransformPoint(effectors[i].transform.localPosition);
+            avgPos += effectors[i].transform.position;
         }
+        avgLeft = effectors[1].transform.position + effectors[2].transform.position;
+        avgLeft /= 2;
+        avgRight = effectors[0].transform.position + effectors[3].transform.position;
+        avgRight /= 2;
+
         avgPos /= effectors.Count;
+        OGoffset = (transform.position - avgPos).normalized;
+        OGoffset *= distance;
+        transform.position = avgPos + OGoffset;
 
-        OGoffset = avgPos - transform.position;
-        Debug.Log(OGoffset.ToString("F4"));
-        OGoffset = OGoffset.normalized;
-        Debug.Log(OGoffset.ToString("F4"));
-
-        //Debug.Log(avgPos.ToString("F4"));
-
-        Vector3 offset = OGoffset + new Vector3(0, avgPos.y);
-        //Debug.Log(offset);
-        //avgPos = Vector3.Scale(avgPos, (new Vector3(1, 0, 1)));
-        //Debug.Log((avgPos + offset));
-        OGoffset *= 1.3f;
-        transform.position = avgPos ;
-        //transform.position = transform.position + offset;
         transform.Translate(new Vector3(1f, 0, 0) * Time.deltaTime);
         
 
