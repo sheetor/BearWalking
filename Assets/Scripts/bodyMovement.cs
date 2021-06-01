@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class bodyRays : MonoBehaviour
+public class bodyMovement : MonoBehaviour
 {
     //RaycastHit hit;
     public List<GameObject> effectors = new List<GameObject>();

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class fitCollider : MonoBehaviour
+public class rayScript : MonoBehaviour
     {
     public RaycastHit hit;
 

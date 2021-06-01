@@ -16,7 +16,7 @@ public class movemet : MonoBehaviour
 
     private void Awake()
     {
-        currPos = aTarget.GetComponent<fitCollider>().hit.point;
+        currPos = aTarget.GetComponent<rayScript>().hit.point;
     }
 
     // Start is called before the first frame update
@@ -38,7 +38,7 @@ public class movemet : MonoBehaviour
     {
 
         
-        rayhitPos = aTarget.GetComponent<fitCollider>().hit.point;
+        rayhitPos = aTarget.GetComponent<rayScript>().hit.point;
         currPos = transform.position;
         float totalDist = Vector3.Distance(currPos, rayhitPos);
         if (totalDist > 1.2f && oTargets[0].GetComponent<movemet>().CR_running == false && oTargets[1].GetComponent<movemet>().CR_running == false)
