@@ -32,19 +32,14 @@ public class bodyMovement : MonoBehaviour
     {
         
         avgPos = Vector3.zero;
-        for (int i = 0; i < effectors.Count; i++)
+        for (int i = 0; i < effectors.Count; i++) //gets average position of all feet
         {
             avgPos += effectors[i].transform.position;
         }
-        avgLeft = effectors[1].transform.position + effectors[2].transform.position;
-        avgLeft /= 2;
-        avgRight = effectors[0].transform.position + effectors[3].transform.position;
-        avgRight /= 2;
-
         avgPos /= effectors.Count;
         OGoffset = (transform.position - avgPos).normalized;
-        OGoffset *= distance;
-        transform.position = avgPos + OGoffset;
+        OGoffset *= distance; //sets an offset for the height of the body
+        transform.position = avgPos + OGoffset; //sets the position of the body based on the average position of the legs + the offset
 
         transform.Translate(new Vector3(1f, 0, 0) * Time.deltaTime);
         

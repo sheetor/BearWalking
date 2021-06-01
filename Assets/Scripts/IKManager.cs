@@ -20,7 +20,7 @@ public class IKManager : MonoBehaviour
         GetChildren(transform, boneTransform);
 
         //Debug.Log(boneTransform.Count/2);
-        for (int i = 0; i <= boneTransform.Count / 2; i++)
+        for (int i = 0; i <= boneTransform.Count / 2; i++) //removes all unneccesary gameobjects, in this case, empty ones containing colliders
         {
             boneTransform.RemoveAt(boneTransform.Count-1);
 
@@ -35,12 +35,12 @@ public class IKManager : MonoBehaviour
 
         targetPosition = targetsphere.transform.position;
 
-        for (int i = boneTransform.Count - 2; i >= 0; i--)
+        for (int i = boneTransform.Count - 2; i >= 0; i--)//start the loop at one joint away from the endpoint
         {
             RotateBone(boneTransform[boneTransform.Count - 1], boneTransform[i], targetPosition);
 
-            if (Pole != null && i + 2 <= boneTransform.Count - 1)
-            {
+            if (Pole != null && i + 2 <= boneTransform.Count - 1) //code from https://github.com/ditzel/SimpleIK/blob/master/FastIK/Assets/FastIK/Scripts/FastIK/FastIKCCD.cs
+            {                                                     //makes the joints rotate towards a target (pole)
                 var plane = new Plane(boneTransform[i + 2].position - boneTransform[i].position, boneTransform[i].position);
                 var projectedPole = plane.ClosestPointOnPlane(Pole.position);
                 var projectedBone = plane.ClosestPointOnPlane(boneTransform[i + 1].position);
@@ -57,7 +57,7 @@ public class IKManager : MonoBehaviour
 
     }
 
-    private void GetChildren(Transform parent, List<Transform> list)
+    private void GetChildren(Transform parent, List<Transform> list)//recursive function to get all child gameobject
     {
         foreach (Transform child in parent)
         {
@@ -66,19 +66,15 @@ public class IKManager : MonoBehaviour
         }
     }
 
-    public static void RotateBone(Transform effector, Transform bone, Vector3 goalPosition)
+    public static void RotateBone(Transform effector, Transform currBone, Vector3 targetPosition)//IK function, rotates joints into place
     {
-        Vector3 effectorPosition = effector.position;
-        Vector3 bonePosition = bone.position;
-        Quaternion boneRotation = bone.rotation;
-
-        Vector3 boneToEffector = effectorPosition - bonePosition;
-        Vector3 boneToGoal = goalPosition - bonePosition;
+        Vector3 boneToEffector = effector.position - currBone.position;
+        Vector3 boneToGoal = targetPosition - currBone.position;
 
         Quaternion fromToRotation = Quaternion.FromToRotation(boneToEffector,boneToGoal);
-        Quaternion newRotation = fromToRotation * boneRotation;
+        Quaternion newRotation = fromToRotation * currBone.rotation;
 
-        bone.rotation = newRotation;
+        currBone.rotation = newRotation;
     }
     
     

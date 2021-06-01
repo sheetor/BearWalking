@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class rayScript : MonoBehaviour
     {
-    public RaycastHit hit;
+    public RaycastHit hit; //used to detect surfaces for the targets/legs to move towards
 
-    public Transform poletarget;
+    public Transform poletarget; //the gameobject will move with the body while raycasting down
     private Vector3 currPos;
     Vector3 distanc;
     // Start is called before the first frame update

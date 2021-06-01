@@ -41,8 +41,8 @@ public class movemet : MonoBehaviour
         rayhitPos = aTarget.GetComponent<rayScript>().hit.point;
         currPos = transform.position;
         float totalDist = Vector3.Distance(currPos, rayhitPos);
-        if (totalDist > 1.2f && oTargets[0].GetComponent<movemet>().CR_running == false && oTargets[1].GetComponent<movemet>().CR_running == false)
-        {
+        if (totalDist > 1.2f && oTargets[0].GetComponent<movemet>().CR_running == false && oTargets[1].GetComponent<movemet>().CR_running == false) //move the target/leg with interpolation 
+        {                                                                                                                //when body has moved a certain distance as well as opposite legs being grounded
             Vector3 midPoint = Vector3.Lerp(currPos, rayhitPos, 0.5f) + new Vector3(0,.5f,0);
             StartCoroutine(LerpPosition(midPoint, 0.1f));
 
@@ -51,13 +51,13 @@ public class movemet : MonoBehaviour
 
     }
 
-    IEnumerator LerpPosition(Vector3 targetPosition, float duration)
+    IEnumerator LerpPosition(Vector3 targetPosition, float duration)//unity linear interpolation
     {
         CR_running = true;
         float time = 0;
         Vector3 startPosition = transform.position;
 
-        while (time < duration)
+        while (time < duration) //interpolates/moves to a midpoint with some height 
         {
             transform.position = Vector3.Lerp(startPosition, targetPosition, time / duration);
             time += Time.deltaTime;
@@ -66,7 +66,7 @@ public class movemet : MonoBehaviour
         time = 0;
         transform.position = targetPosition;
 
-        while (time < duration)
+        while (time < duration)//interpolates/moves to the targetpoint from the midpoint
         {
             transform.position = Vector3.Lerp(targetPosition, rayhitPos, time / duration);
             time += Time.deltaTime;
@@ -77,19 +77,4 @@ public class movemet : MonoBehaviour
 
     }
 
-
-    public static Quaternion RotateBone(Transform effector, Transform bone, Vector3 goalPosition)
-    {
-        Vector3 effectorPosition = effector.position;
-        Vector3 bonePosition = bone.position;
-        Quaternion boneRotation = bone.rotation;
-
-        Vector3 boneToEffector = effectorPosition - bonePosition;
-        Vector3 boneToGoal = goalPosition - bonePosition;
-
-        Quaternion fromToRotation = Quaternion.FromToRotation(boneToEffector, boneToGoal);
-        Quaternion newRotation = fromToRotation * boneRotation;
-
-        return newRotation;
-    }
 }

@@ -17,15 +17,13 @@ public class Player : MonoBehaviour   {
     {
         anim = gameObject.GetComponentInChildren<Animator>();
         controller = GetComponent<CharacterController>();
-
-     
     }
 
     // Update is called once per frame
     void Update()
     {
         
-        if (controller.isGrounded) {
+        if (controller.isGrounded) {//smooth turning
             moveDirection = transform.forward * Input.GetAxis("Vertical") * speed;
         }
 
